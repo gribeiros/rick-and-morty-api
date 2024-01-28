@@ -36,17 +36,33 @@ interface Location {
 export async function requestCharacters(): Promise<Character[]> {
 
     try {
-        const [rickResponse, mortyResponse] = await Promise.all([
-            request.get('/character/?name=rick'),
-            request.get('/character/?name=morty')
-        ]);
+        const res = await request.get('/character');
 
-        const rickCharacters: Character[] = rickResponse.data.results;
-        const mortyCharacters: Character[] = mortyResponse.data.results;
-
-        const combinedCharacters: Character[] = [...rickCharacters, ...mortyCharacters];
+        const characters: Character[] = res.data.results;
 
         await new Promise((resolve) => setTimeout(resolve, 3000))
+        
+        return characters;
+    } catch (err) {
+        console.error("Error fetching characters:", err);
+        if (axios.isAxiosError(err)) {
+            throw err;
+        } else {
+            throw new Error(`Unexpected error occurred while fetching characters:\n${err}`);
+        }
+    }
+}
+
+
+export async function requestCharacterByName(name: string): Promise<Character[]> {
+
+    try {
+        const res = await request.get(`/character/?name=${name}`);
+
+        const characters = res.data.results;
+
+        const combinedCharacters: Character[] = [...characters];
+
         return combinedCharacters;
     } catch (err) {
         console.error("Error fetching characters:", err);

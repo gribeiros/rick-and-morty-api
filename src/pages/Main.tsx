@@ -11,6 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { StatusCharacter } from "@/components/ui/status";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Loading } from "@/components/ui/loading";
+import NavigationMenu from "@/components/ui/nagation-menu";
 
 function Main() {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -31,6 +32,7 @@ function Main() {
   useEffect(() => {
     getCharacters();
   }, []);
+  
 
   return (
     <Suspense fallback={<Loading />}>
@@ -50,40 +52,46 @@ function Main() {
           </Alert>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4 m-8">
-          {characters.map((c, i) => (
-            <Card key={i} className="bg-[#C1F2B0] text-lime-900">
-              <CardHeader className="flex justify-center items-center">
-                <CardTitle className="text-xl mb-3">{c.name}</CardTitle>
-                <CardDescription>
-                  <span className="flex items-center mb-2">
-                    <StatusCharacter status={c.status} />
-                    <span className="ml-1 text-xl">{c.status}</span>
-                  </span>
-                  <img src={c.image} alt={c.name} />
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col text-lg">
-                <span>
-                  <strong className="mr-1">Localização:</strong>
-                  {c.location.name}
-                </span>
-                <span>
-                  <strong className="mr-1">Origem:</strong>
-                  {c.origin.name}
-                </span>
-                <span>
-                  <strong className="mr-1">Sexo:</strong>
-                  {c.gender}
-                </span>
-                <span>
-                  <strong className="mr-1">Especie:</strong>
-                  {c.species}
-                </span>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <>
+          <NavigationMenu setCharacters={setCharacters} />
+
+          <main>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4 m-8">
+              {characters.map((c, i) => (
+                <Card key={i} className="bg-[#C1F2B0] text-lime-900">
+                  <CardHeader className="flex justify-center items-center">
+                    <CardTitle className="text-xl mb-3">{c.name}</CardTitle>
+                    <CardDescription>
+                      <span className="flex items-center mb-2">
+                        <StatusCharacter status={c.status} />
+                        <span className="ml-1 text-xl">{c.status}</span>
+                      </span>
+                      <img src={c.image} alt={c.name} />
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex flex-col text-lg">
+                    <span>
+                      <strong className="mr-1">Localização:</strong>
+                      {c.location.name}
+                    </span>
+                    <span>
+                      <strong className="mr-1">Origem:</strong>
+                      {c.origin.name}
+                    </span>
+                    <span>
+                      <strong className="mr-1">Sexo:</strong>
+                      {c.gender}
+                    </span>
+                    <span>
+                      <strong className="mr-1">Especie:</strong>
+                      {c.species}
+                    </span>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </main>
+        </>
       )}
     </Suspense>
   );

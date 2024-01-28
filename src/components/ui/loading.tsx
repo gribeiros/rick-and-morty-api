@@ -14,7 +14,7 @@ export function Loading() {
         // Se o progresso atingir 100, exibe o conteúdo adicional
         setShowContent(true);
       }
-    }, 500);
+    }, 650);
 
     return () => clearTimeout(timer);
   }, [progress]);
@@ -25,7 +25,7 @@ export function Loading() {
         <div></div>
       ) : (
         // Exibe a barra de progresso enquanto o progresso é menor que 100
-        <Progress value={progress} className="w-[60%]" />
+        <Progress value={progress} className="w-[35%]" />
       )}
     </>
   );
