@@ -4,7 +4,11 @@ import { HomeIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import { Character, requestCharacterByName } from "@/lib/api";
 
-function NavigationMenu({ setCharacters }: any) {
+type NavigationPropos = {
+  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>;
+};
+
+function NavigationMenu({ setCharacters }: NavigationPropos) {
   const [isValue, setIsValue] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
